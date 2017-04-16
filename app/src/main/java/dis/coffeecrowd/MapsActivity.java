@@ -9,10 +9,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import android.content.Intent;
+
+import android.view.View;
+import android.widget.Button;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Button RateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Button that opens "coffee rating" -view
+        RateButton = (Button) findViewById(R.id.button_send);
+        RateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchRateCoffeeActivity();
+            }
+        });
     }
+
+    private void launchRateCoffeeActivity() {
+        Intent intent = new Intent(this, RateCoffeeActivity.class);
+        startActivity(intent);
+    }
+
 
 
     /**
