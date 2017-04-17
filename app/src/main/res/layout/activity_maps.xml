@@ -16,4 +16,13 @@
      android:layout_marginBottom="30dp"
      android:paddingRight="10dp"/>
 
+    <Button
+        android:id="@+id/button_send"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/add_button_custom"  />
+
     </fragment>
