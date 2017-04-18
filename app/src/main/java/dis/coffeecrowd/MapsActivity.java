@@ -8,16 +8,19 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.content.Intent;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button RateButton;
+    private LatLng kioski;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //googleMap.setOnMarkerClickListener(this);
+
+        kioski = new LatLng(60.169925, 24.946092);
+        mMap.addMarker(new MarkerOptions().position(kioski).title("R-kioski Kaisaniemi").snippet("sdsfdfg"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(kioski));
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                launchRateCoffeeActivity();
+                Toast.makeText(MapsActivity.this, "You are here", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
     }
 }
