@@ -46,6 +46,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
+    private void launchCoffeeListActivity() {
+        Intent intent = new Intent(this, CoffeeListActivity.class);
+        startActivity(intent);
+    }
+
 
 
     /**
@@ -71,8 +76,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                launchRateCoffeeActivity();
-                Toast.makeText(MapsActivity.this, "You are here", Toast.LENGTH_SHORT).show();
+                launchCoffeeListActivity();
+                Toast.makeText(MapsActivity.this, "Opening Coffee listing", Toast.LENGTH_SHORT).show();
 
 
             }
