@@ -78,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Add marker and move the camera there
         kioski = new LatLng(60.169925, 24.946092);
-        mMap.addMarker(new MarkerOptions().position(kioski).title("R-kioski Kaisaniemi").snippet("sdsfdfg"));
+        mMap.addMarker(new MarkerOptions().position(kioski).title("R-kioski Kaisaniemi").snippet("Click to see coffees"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(kioski));
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

@@ -2,6 +2,7 @@ package dis.coffeecrowd;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -27,11 +29,35 @@ public class CoffeeListActivity extends AppCompatActivity
         super(context, R.layout.list_item, R.id.title, coffees);
     }
 
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            FeatureView featureView;
+            if (convertView instanceof FeatureView) {
+                featureView = (FeatureView) convertView;
+            } else {
+                featureView = new FeatureView(getContext());
+            }
+
+            CoffeeDetails coffee = getItem(position);
+
+            featureView.setTitle(coffee.title);
+            featureView.setDescription(coffee.description);
+            featureView.setInfo();
+
+            Resources resources = getContext().getResources();
+            String title = coffee.title;
+            String description = coffee.description;
+            featureView.setContentDescription(title + ". " + description);
+
+            return featureView;
+        }
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coffee_list);
+        setTitle("List of coffees");
         ListView list = (ListView) findViewById(R.id.list);
 
         ListAdapter adapter = new CustomArrayAdapter (this, CoffeeDetailsList.COFFEES);

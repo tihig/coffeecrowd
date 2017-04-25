@@ -12,7 +12,7 @@ public final class CoffeeDetailsList {
 
     public static final CoffeeDetails[] COFFEES = {
             new CoffeeDetails("Tumma mokka",
-                    2,
+                    "Tumma ja paahteinen kahvielämys",
                     RateCoffeeActivity.class)
     };
 }
