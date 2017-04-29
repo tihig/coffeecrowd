@@ -1,9 +1,14 @@
 package dis.coffeecrowd;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,26 +17,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import android.content.Intent;
-
-import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import static dis.coffeecrowd.R.id.map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapPage extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button RateButton;
     private LatLng kioski;
     private LongPressLocationSource mLocationSource;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_map_page);
 
         mLocationSource = new LongPressLocationSource();
 
@@ -58,20 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, CoffeeListActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mLocationSource.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mLocationSource.onPause();
-    }
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -85,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 launchCoffeeListActivity();
-                Toast.makeText(MapsActivity.this, "Opening Coffee listing", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapPage.this, "Opening Coffee listing", Toast.LENGTH_SHORT).show();
 
 
             }
