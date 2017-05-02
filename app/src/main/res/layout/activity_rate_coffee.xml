@@ -121,6 +121,7 @@
             <RatingBar
                 android:id="@+id/taste_rating"
                 style="@android:style/Widget.Material.RatingBar"
+                android:stepSize="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -154,6 +155,7 @@
             <RatingBar
                 android:id="@+id/size_rating"
                 style="@android:style/Widget.Material.RatingBar"
+                android:stepSize="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -186,6 +188,7 @@
             <RatingBar
                 android:id="@+id/roast_rating"
                 style="@android:style/Widget.Material.RatingBar"
+                android:stepSize="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
