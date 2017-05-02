@@ -2,29 +2,43 @@ package dis.coffeecrowd;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Cafe {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cafe implements Serializable {
 
     @SerializedName("id")
-    public final Integer cafeId;
+    public Integer cafeId;
     @SerializedName("name")
-    public final String name;
+    public String name;
     @SerializedName("googleId")
-    public final Integer googleId;
+    public String googleId;
     @SerializedName("lat")
-    public Integer lat;
+    public Double lat;
     @SerializedName("lon")
-    public Integer lon;
+    public Double lon;
+    @SerializedName("coffees")
+    public List coffee = null;
 
-    public Cafe(Integer cafeId, String name , Integer googleId, Integer lat, Integer lon) {
-        this.cafeId = cafeId;
-        this.name = name;
-        this.googleId = googleId;
-        this.lat = lat;
-        this.lon = lon;
+
+        public class Coffee {
+
+            @SerializedName("id")
+            public Integer id_coffee;
+            @SerializedName("name")
+            public String name_coffee;
+            @SerializedName("price")
+            public Double price;
+            @SerializedName("averageTaste")
+            public Double averageTaste;
+            @SerializedName("averageRoast")
+            public Double averageRoast;
+            @SerializedName("averageSize")
+            public Double averageSize;
+
+        }
     }
-    public Cafe(Integer cafeId, String name , Integer googleId) {
-        this.cafeId = cafeId;
-        this.name = name;
-        this.googleId = googleId;
-    }
-}
+
+
+
