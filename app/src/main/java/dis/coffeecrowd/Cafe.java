@@ -3,13 +3,12 @@ package dis.coffeecrowd;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Cafe implements Serializable {
 
     @SerializedName("id")
-    public Integer cafeId;
+    public Integer id;
     @SerializedName("name")
     public String name;
     @SerializedName("googleId")
@@ -25,9 +24,9 @@ public class Cafe implements Serializable {
         public class Coffee {
 
             @SerializedName("id")
-            public Integer id_coffee;
+            public Integer id;
             @SerializedName("name")
-            public String name_coffee;
+            public String name;
             @SerializedName("price")
             public Double price;
             @SerializedName("averageTaste")
