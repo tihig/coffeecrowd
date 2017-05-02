@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,6 +77,7 @@ public class CoffeeListActivity extends AppCompatActivity
             return true;
     }
 
+    //Opens coffee rating view when clicked
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CoffeeDetails coffee = (CoffeeDetails) parent.getAdapter().getItem(position);
