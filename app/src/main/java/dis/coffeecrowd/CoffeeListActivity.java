@@ -18,9 +18,9 @@ public class CoffeeListActivity extends AppCompatActivity
         implements AdapterView.OnItemClickListener {
 
     private static class CustomArrayAdapter extends
-         ArrayAdapter<CoffeeDetails> {
+         ArrayAdapter<Coffee> {
 
-    public CustomArrayAdapter(Context context, CoffeeDetails[] coffees) {
+    public CustomArrayAdapter(Context context, Coffee[] coffees) {
         super(context, R.layout.list_item, R.id.title, coffees);
     }
 
@@ -33,7 +33,7 @@ public class CoffeeListActivity extends AppCompatActivity
                 featureView = new FeatureView(getContext());
             }
 
-            CoffeeDetails coffee = getItem(position);
+            Coffee coffee = getItem(position);
 
             featureView.setName(coffee.name);
             featureView.setPrice(coffee.price);
@@ -82,7 +82,7 @@ public class CoffeeListActivity extends AppCompatActivity
     //Opens coffee rating view when clicked
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CoffeeDetails coffee = (CoffeeDetails) parent.getAdapter().getItem(position);
+        Coffee coffee = (Coffee) parent.getAdapter().getItem(position);
         Intent intent = new Intent(this, coffee.activityClass);
         intent.putExtra("coffee", coffee);
         startActivity(intent);

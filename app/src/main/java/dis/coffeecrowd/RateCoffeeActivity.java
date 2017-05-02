@@ -27,7 +27,7 @@ public class RateCoffeeActivity extends AppCompatActivity {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final JsonAdapter<Review> jsonAdapter = new Moshi.Builder().build().adapter(Review.class);
 
-    private CoffeeDetails coffee;
+    private Coffee coffee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,8 @@ public class RateCoffeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rate_coffee);
 
         Intent intent = getIntent();
-        coffee = (CoffeeDetails) intent.getSerializableExtra("coffee");
+        coffee = (Coffee) intent.getSerializableExtra("coffee");
+
         ((TextView) findViewById(R.id.coffee_name)).setText(coffee.name);
 
         Button rateButton = (Button) findViewById(R.id.send_rating_button);

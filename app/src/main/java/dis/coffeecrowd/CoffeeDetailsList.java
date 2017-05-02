@@ -10,15 +10,15 @@ public final class CoffeeDetailsList {
     private CoffeeDetailsList() {
     }
 
-    public static final CoffeeDetails[] COFFEES = {
-            new CoffeeDetails(1,
+    public static final Coffee[] COFFEES = {
+            new Coffee(1,
                     "Tumma mokka",
                     1.50,
                     1.8,
                     4.3,
                     2.7,
                     RateCoffeeActivity.class),
-            new CoffeeDetails(2,
+            new Coffee(2,
                     "Presidentti",
                     1.50,
                     2.0,
