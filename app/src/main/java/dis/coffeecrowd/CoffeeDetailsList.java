@@ -11,8 +11,19 @@ public final class CoffeeDetailsList {
     }
 
     public static final CoffeeDetails[] COFFEES = {
-            new CoffeeDetails("Tumma mokka",
-                    "Tumma ja paahteinen kahvielämys",
+            new CoffeeDetails(1,
+                    "Tumma mokka",
+                    1.50,
+                    1.8,
+                    4.3,
+                    2.7,
+                    RateCoffeeActivity.class),
+            new CoffeeDetails(2,
+                    "Presidentti",
+                    1.50,
+                    2.0,
+                    4.3,
+                    3.6,
                     RateCoffeeActivity.class)
     };
 }

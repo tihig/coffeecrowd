@@ -35,14 +35,16 @@ public class CoffeeListActivity extends AppCompatActivity
 
             CoffeeDetails coffee = getItem(position);
 
-            featureView.setTitle(coffee.title);
-            featureView.setDescription(coffee.description);
+            featureView.setName(coffee.name);
+            featureView.setPrice(coffee.price);
+            featureView.setAverageTaste(coffee.averageTaste);
+            featureView.setAverageSize(coffee.averageSize);
+            featureView.setAverageRoast(coffee.averageRoast);
             featureView.setInfo();
 
             Resources resources = getContext().getResources();
-            String title = coffee.title;
-            String description = coffee.description;
-            featureView.setContentDescription(title + ". " + description);
+            String name = coffee.name;
+            featureView.setContentDescription(name);
 
             return featureView;
         }
@@ -81,7 +83,9 @@ public class CoffeeListActivity extends AppCompatActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CoffeeDetails coffee = (CoffeeDetails) parent.getAdapter().getItem(position);
-        startActivity(new Intent(this, coffee.activityClass));
+        Intent intent = new Intent(this, coffee.activityClass);
+        intent.putExtra("coffee", coffee);
+        startActivity(intent);
     }
 
 }
