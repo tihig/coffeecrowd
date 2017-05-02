@@ -13,7 +13,7 @@ public class RateCoffeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rate_coffee);
 
         Intent intent = getIntent();
-        CoffeeDetails coffee = (CoffeeDetails) intent.getSerializableExtra("coffee");
+        Coffee coffee = (Coffee) intent.getSerializableExtra("coffee");
 
         ((TextView) findViewById(R.id.coffee_name)).setText(coffee.name);
     }

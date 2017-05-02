@@ -1,15 +1,10 @@
 package dis.coffeecrowd;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +19,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static dis.coffeecrowd.R.id.map;
 
@@ -61,7 +61,35 @@ public class MapPage extends AppCompatActivity implements
             }
         });
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kahvi-backend.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final CafeService service = retrofit.create(CafeService.class);
+
+        Call<ResponseBody> call = service.cafes();
+       call.enqueue(new Callback<ResponseBody>() {
+           @Override
+           public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+               try {
+
+                   Toast.makeText(MapPage.this,response.body().string(), Toast.LENGTH_SHORT).show();
+               } catch (IOException e) {
+                   e.printStackTrace();
+                   Toast.makeText(MapPage.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+
+           @Override
+           public void onFailure(Call<ResponseBody> _, Throwable t) {
+               t.printStackTrace();
+               Toast.makeText(MapPage.this,t.getMessage(), Toast.LENGTH_SHORT).show();
+           }
+       });
     }
+
+
 
     private void launchRateCoffeeActivity() {
         Intent intent = new Intent(this, RateCoffeeActivity.class);

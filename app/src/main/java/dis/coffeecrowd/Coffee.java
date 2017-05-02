@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
 
-public class CoffeeDetails implements Serializable {
+public class Coffee implements Serializable {
 
     public final Integer id;
     public final String name;
@@ -19,7 +19,7 @@ public class CoffeeDetails implements Serializable {
      */
     public final Class<? extends AppCompatActivity> activityClass;
 
-    public CoffeeDetails(
+    public Coffee(
             Integer id, String name, Double price, Double averageTaste, Double averageSize,
             Double averageRoast, Class<? extends AppCompatActivity> activityClass) {
         this.id = id;
