@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,14 +20,27 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 
 import static dis.coffeecrowd.R.id.map;
 
@@ -39,6 +53,8 @@ public class MapPage extends AppCompatActivity implements
     private Button RateButton;
     private LatLng kioski;
     private boolean mPermissionDenied = false;
+    private Gson gson;
+    private List<Cafe> cafes;
 
 
 
@@ -61,32 +77,7 @@ public class MapPage extends AppCompatActivity implements
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://kahvi-backend.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        final CafeService service = retrofit.create(CafeService.class);
-
-        Call<ResponseBody> call = service.cafes();
-       call.enqueue(new Callback<ResponseBody>() {
-           @Override
-           public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-               try {
-
-                   Toast.makeText(MapPage.this,response.body().string(), Toast.LENGTH_SHORT).show();
-               } catch (IOException e) {
-                   e.printStackTrace();
-                   Toast.makeText(MapPage.this,e.getMessage(), Toast.LENGTH_SHORT).show();
-               }
-           }
-
-           @Override
-           public void onFailure(Call<ResponseBody> _, Throwable t) {
-               t.printStackTrace();
-               Toast.makeText(MapPage.this,t.getMessage(), Toast.LENGTH_SHORT).show();
-           }
-       });
     }
 
 
@@ -96,8 +87,9 @@ public class MapPage extends AppCompatActivity implements
         startActivity(intent);
     }
 
-    private void launchCoffeeListActivity() {
-        Intent intent = new Intent(this, CoffeeListActivity.class);
+    private void launchCoffeeListActivity(Cafe cafe) {
+        Intent intent = new Intent(this,CoffeeListActivity.class);
+        intent.putExtra("cafe", cafe);
         startActivity(intent);
     }
 
@@ -109,17 +101,72 @@ public class MapPage extends AppCompatActivity implements
         //Set location
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        //Setup DB fetcher
+        OkHttpClient client = new OkHttpClient();
 
-        //Add marker and move the camera there
-        kioski = new LatLng(60.169925, 24.946092);
-        mMap.addMarker(new MarkerOptions().position(kioski).title("R-kioski Kaisaniemi").snippet("Click to see coffees"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(kioski));
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kahvi-backend.herokuapp.com/")
+                .client(client)
+                .build();
+
+        final CafeService service = retrofit.create(CafeService.class);
+
+        Call<ResponseBody> call = service.cafes();
+        //Fetching cafes from DB
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+
+                    Log.d("Tassa ollaan", response.body().toString());
+                    String json = response.body().string();
+                    System.out.println(response.toString());
+                    Log.w("Retrofit@Response", response.body().string());
+
+
+                    Moshi moshi = new Moshi.Builder().build();
+                    Type listMyData = Types.newParameterizedType(List.class, Cafe.class);
+                    JsonAdapter<List<Cafe>> adapter = moshi.adapter(listMyData);
+
+                    cafes = adapter.fromJson(json);
+                    System.out.println(cafes.toString());
+
+                    kioski = new LatLng((double)cafes.get(2).lat, (double) cafes.get(2).lon);
+                    mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(2).name).snippet("Click to see coffees"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(kioski));
+
+                    for (int i = 0; i < (int) cafes.size(); i++) {
+                        if (cafes.get(i).lat != null){
+                        kioski = new LatLng((double) cafes.get(i).lat, (double) cafes.get(i).lon);
+                        mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(i).name).snippet("Click to see coffees")).setTag(cafes.get(i));
+
+                    }
+                    }
+                    Toast.makeText(MapPage.this, "Total amount of cafes: " + Integer.toString(cafes.size()), Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MapPage.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> _, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(MapPage.this,t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                launchCoffeeListActivity();
-                Toast.makeText(MapPage.this, "Opening Coffee listing", Toast.LENGTH_SHORT).show();
+
+                launchCoffeeListActivity((Cafe) marker.getTag());
+                Toast.makeText(MapPage.this, "Opening Coffee listing ", Toast.LENGTH_SHORT).show();
 
 
             }

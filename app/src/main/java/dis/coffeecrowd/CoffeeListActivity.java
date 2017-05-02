@@ -13,9 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class CoffeeListActivity extends AppCompatActivity
         implements AdapterView.OnItemClickListener {
+    private String cafeTitle;
 
     private static class CustomArrayAdapter extends
          ArrayAdapter<Coffee> {
@@ -58,6 +60,8 @@ public class CoffeeListActivity extends AppCompatActivity
         ListView list = (ListView) findViewById(R.id.list);
 
         ListAdapter adapter = new CustomArrayAdapter (this, CoffeeDetailsList.COFFEES);
+        //cafe passed from map marker
+        Cafe cafe = (Cafe) getIntent().getSerializableExtra("cafe");
 
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
