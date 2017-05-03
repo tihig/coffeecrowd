@@ -7,13 +7,4 @@
     android:layout_height="match_parent"
     tools:context="dis.coffeecrowd.MapPage" >
 
-<Button
-android:id="@+id/button_send"
-android:layout_width="50dp"
-android:layout_height="50dp"
-android:layout_gravity="right|bottom"
-android:layout_marginBottom="40dp"
-android:layout_marginRight="30dp"
-android:background="@drawable/add_button_custom"  />
-
-    </fragment>
+</fragment>

@@ -3,14 +3,12 @@ package dis.coffeecrowd;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,27 +18,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 
 import static dis.coffeecrowd.R.id.map;
 
@@ -50,41 +40,18 @@ public class MapPage extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback  {
 
     private GoogleMap mMap;
-    private Button RateButton;
     private LatLng kioski;
     private boolean mPermissionDenied = false;
-    private Gson gson;
     private List<Cafe> cafes;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_page);
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
-
-        //Button that opens "coffee rating" -view
-        RateButton = (Button) findViewById(R.id.button_send);
-        RateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchRateCoffeeActivity();
-            }
-        });
-
-
-    }
-
-
-
-    private void launchRateCoffeeActivity() {
-        Intent intent = new Intent(this, RateCoffeeActivity.class);
-        startActivity(intent);
     }
 
     private void launchCoffeeListActivity(Cafe cafe) {
@@ -93,7 +60,6 @@ public class MapPage extends AppCompatActivity implements
         startActivity(intent);
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -101,9 +67,6 @@ public class MapPage extends AppCompatActivity implements
         //Set location
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
-        gson = new GsonBuilder()
-                .setLenient()
-                .create();
         //Setup DB fetcher
         OkHttpClient client = new OkHttpClient();
 
@@ -164,11 +127,8 @@ public class MapPage extends AppCompatActivity implements
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-
                 launchCoffeeListActivity((Cafe) marker.getTag());
                 Toast.makeText(MapPage.this, "Opening Coffee listing ", Toast.LENGTH_SHORT).show();
-
-
             }
         });
     }
@@ -192,7 +152,6 @@ public class MapPage extends AppCompatActivity implements
         Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         return false;
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,

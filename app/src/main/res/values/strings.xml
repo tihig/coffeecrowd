@@ -3,4 +3,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_coffee_list">CoffeeListActivity</string>
     <string name="title_activity_map_page">Map</string>
+    <string name="title_activity_add_coffee">AddCoffeeActivity</string>
+    <string name="title_activity_rate_coffee">RateCoffeeActivity</string>
 </resources>
