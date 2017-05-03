@@ -34,15 +34,31 @@
 
         <activity
             android:name=".RateCoffeeActivity"
+            android:label="@string/title_activity_rate_coffee"
+            android:parentActivityName=".CoffeeListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CoffeeListActivity" />
+        </activity>
+
+        <activity
+            android:name=".AddCoffeeActivity"
+            android:label="@string/title_activity_add_coffee"
+            android:parentActivityName=".CoffeeListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CoffeeListActivity" />
+        </activity>
+
+        <activity
+            android:name=".CoffeeListActivity"
+            android:label="@string/title_activity_coffee_list"
             android:parentActivityName=".MapPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MapPage" />
         </activity>
-        <activity
-            android:name=".CoffeeListActivity"
-            android:label="@string/title_activity_coffee_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".MapPage"
             android:label="@string/title_activity_map_page">

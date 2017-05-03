@@ -22,78 +22,18 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/review"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="1"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/review"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_row="1"
-                        android:layout_weight="1"
-                        android:paddingRight="8dp"
-                        android:text="Review"
-                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                        tools:layout_editor_absoluteX="164dp"
-                        tools:layout_editor_absoluteY="16dp" />
-
-                    <TextView
-                        android:id="@+id/coffee_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="1"
-                        android:layout_weight="1"
-                        android:text="Coffee"
-                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                        tools:layout_editor_absoluteX="164dp"
-                        tools:layout_editor_absoluteY="16dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_row="2"
-                        android:layout_weight="1"
-                        android:paddingRight="8dp"
-                        android:text="In"
-                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                        tools:layout_editor_absoluteX="164dp"
-                        tools:layout_editor_absoluteY="16dp" />
-
-                    <TextView
-                        android:id="@+id/cafe_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="2"
-                        android:layout_weight="1"
-                        android:text="Place"
-                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                        tools:layout_editor_absoluteX="164dp"
-                        tools:layout_editor_absoluteY="66dp" />
-                </LinearLayout>
-
-            </LinearLayout>
+                android:paddingRight="8dp"
+                android:text="Review"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                tools:layout_editor_absoluteX="164dp"
+                tools:layout_editor_absoluteY="16dp" />
 
         </LinearLayout>
 
