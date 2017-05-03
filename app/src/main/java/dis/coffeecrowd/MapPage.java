@@ -52,6 +52,7 @@ public class MapPage extends AppCompatActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
+        setTitle("Coffee Crowd - select cafe");
     }
 
     private void launchCoffeeListActivity(Cafe cafe) {
@@ -99,7 +100,7 @@ public class MapPage extends AppCompatActivity implements
 
                     kioski = new LatLng((double)cafes.get(2).lat, (double) cafes.get(2).lon);
                     mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(2).name).snippet("Click to see coffees"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(kioski));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(kioski.latitude, kioski.longitude), 12.0f));
 
                     for (int i = 0; i < (int) cafes.size(); i++) {
                         if (cafes.get(i).lat != null){
@@ -108,7 +109,7 @@ public class MapPage extends AppCompatActivity implements
 
                     }
                     }
-                    Toast.makeText(MapPage.this, "Total amount of cafes: " + Integer.toString(cafes.size()), Toast.LENGTH_LONG).show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(MapPage.this,e.getMessage(), Toast.LENGTH_SHORT).show();
