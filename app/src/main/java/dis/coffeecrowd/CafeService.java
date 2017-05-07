@@ -18,4 +18,6 @@ public interface CafeService {
     @GET("cafes/{id}")
     Call<Cafe> cafe(@Path("id") int id);
 
+    @GET("coffees/{cafeId}")
+    Call<ResponseBody> coffees(@Path("cafeId") int cafeId);
 }

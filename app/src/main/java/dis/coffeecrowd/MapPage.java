@@ -85,7 +85,6 @@ public class MapPage extends AppCompatActivity implements
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 try {
 
-                    Log.d("Tassa ollaan", response.body().toString());
                     String json = response.body().string();
                     System.out.println(response.toString());
                     Log.w("Retrofit@Response", response.body().string());
@@ -99,7 +98,7 @@ public class MapPage extends AppCompatActivity implements
                     System.out.println(cafes.toString());
 
                     kioski = new LatLng((double)cafes.get(2).lat, (double) cafes.get(2).lon);
-                    mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(2).name).snippet("Click to see coffees"));
+                    //mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(2).name).snippet("Click to see coffees"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(kioski.latitude, kioski.longitude), 12.0f));
 
                     for (int i = 0; i < (int) cafes.size(); i++) {
@@ -150,7 +149,7 @@ public class MapPage extends AppCompatActivity implements
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Zooming into location", Toast.LENGTH_SHORT).show();
         return false;
     }
 
