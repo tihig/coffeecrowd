@@ -1,8 +1,12 @@
 package dis.coffeecrowd;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,10 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,6 +51,7 @@ public class MapPage extends AppCompatActivity implements
     private LatLng kioski;
     private boolean mPermissionDenied = false;
     private List<Cafe> cafes;
+    private LatLng helsinki = new LatLng(60.170125, 24.938280);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,7 @@ public class MapPage extends AppCompatActivity implements
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
         setTitle("Coffee Crowd - select cafe");
+
     }
 
     private void launchCoffeeListActivity(Cafe cafe) {
@@ -96,11 +106,11 @@ public class MapPage extends AppCompatActivity implements
 
                     cafes = adapter.fromJson(json);
                     System.out.println(cafes.toString());
-
-                    kioski = new LatLng((double)cafes.get(2).lat, (double) cafes.get(2).lon);
-                    //mMap.addMarker(new MarkerOptions().position(kioski).title(cafes.get(2).name).snippet("Click to see coffees"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(kioski.latitude, kioski.longitude), 12.0f));
-
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(helsinki)      // Sets the center of the map to Mountain View
+                            .zoom(10)                   // Sets the zoom
+                            .build();                   // Creates a CameraPosition from the builder
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     for (int i = 0; i < (int) cafes.size(); i++) {
                         if (cafes.get(i).lat != null){
                         kioski = new LatLng((double) cafes.get(i).lat, (double) cafes.get(i).lon);
@@ -144,6 +154,11 @@ public class MapPage extends AppCompatActivity implements
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            //Log.i("Lokaatio: ", myLocation.toString());
+
         }
     }
 
@@ -185,6 +200,8 @@ public class MapPage extends AppCompatActivity implements
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
+
+
 
 }
 
