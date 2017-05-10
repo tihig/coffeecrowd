@@ -87,6 +87,14 @@ public class CoffeeListActivity extends AppCompatActivity
         Intent intent = getIntent();
         cafe = (Cafe) intent.getSerializableExtra("cafe");
 
+        addCoffeeButton = (Button) findViewById(R.id.button_add_coffee);
+        addCoffeeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddCoffeeActivity();
+            }
+        });
+
         if(cafe.name != null) {
             setTitle(cafe.name);
         }else{
@@ -156,14 +164,6 @@ public class CoffeeListActivity extends AppCompatActivity
                 Log.w("Retrofit@Failure", "Failed to call server");
             }
 
-        });
-
-        addCoffeeButton = (Button) findViewById(R.id.button_add_coffee);
-        addCoffeeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchAddCoffeeActivity();
-            }
         });
 
                     // System.out.println(coffees[0].name);
